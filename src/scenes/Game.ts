@@ -1,10 +1,12 @@
 import * as Phaser from 'phaser';
 
+
 let currentScore = 0;
 let balls:Phaser.GameObjects.Arc[] = [];
 let scoreBoxes:Phaser.GameObjects.Rectangle[] = [];
 let  boxNumbers:Phaser.GameObjects.Text[] = [];
 let   black_ball:Phaser.GameObjects.Arc;
+
 
 
 
@@ -14,22 +16,22 @@ export default class Game extends Phaser.Scene
    {
 
    }
-    createPlayBall (balls:Phaser.GameObjects.Arc[], scoreBoxes:Phaser.GameObjects.Text[], currentScoreText:string, scores:number[], x:number, n:number) {
-
+    createPlayBall (balls:Phaser.GameObjects.Arc[], scoreBoxes:Phaser.GameObjects.Rectangle[], currentScoreText:Phaser.GameObjects.Text, scores:number[], x:number, n:number) {
+           
         const startButton =  this.add.circle(40, 50, 40, 0xffffff, 1)
-        const startButtonText=  this.add.text(startButton.getCenter().x, startButton.getCenter().y, "START", { font: "14px Arial", fill: "#efab35", fontSize: "bold" });
+        const startButtonText: Phaser.GameObjects.Text =  this.add.text(startButton.getCenter().x, startButton.getCenter().y, "START", { font: "14px Arial", color: "#efab35", fontSize: "bold" });
          startButtonText.setOrigin(0.5)
           
          startButton.setInteractive();
          startButton.on('pointerdown', () => {
-        const playBall = this.add.circle(450, 30, 12, 0xef1f78, 1);
+        const playBall: Phaser.GameObjects.Arc | any = this.add.circle(450, 30, 12, 0xef1f78, 1);
         this.physics.add.existing(playBall);
 
           
             playBall.body.setBounce(0.2);
             playBall.body.setCollideWorldBounds();
-            playBall.body.setCircle(12);
-          
+            playBall.body.setCircle(12); 
+            
             const angle = Phaser.Math.FloatBetween(0, Math.PI * 2);
             const speed = 200;
             const vx = speed * Math.cos(angle);
@@ -59,7 +61,8 @@ export default class Game extends Phaser.Scene
                         if(scores[key] === 15 || scores[key] === 25 || scores[key] === 35 || scores[key] === 5){
                             currentScore += scores[key]
                             currentScoreText.setText( currentScore.toString());
-                            let scoreText = thatScore.add.text(scoreBox.x+ 10, scoreBox.y + 50, 'SCORE!', { fontSize: '40px', fill: '#fff' });
+
+                            let scoreText = thatScore.add.text(scoreBox.x+ 10, scoreBox.y + 50, 'SCORE!', { fontSize: '40px', color: '#fff' });
                              scoreText.setOrigin(0.5, 0.5);
 
                              thatScore.tweens.add({
@@ -104,15 +107,16 @@ export default class Game extends Phaser.Scene
 
    create(){
 
+
       let thisPhaser = this
       function plinko(n:number){
 
-  const scoreBoard = thisPhaser.add.rectangle( 850, 70, 60, 60, 0xefab35, 1);
-        const scoreLabel = thisPhaser.add.text(scoreBoard.getCenter().x, scoreBoard.y - 50, "SCORE", { font: "16px Arial", fill: "#ffffff" });
+  const scoreBoard = thisPhaser.add.rectangle( 700, 70, 60, 60, 0xefab35, 1);
+        const scoreLabel = thisPhaser.add.text(scoreBoard.getCenter().x, scoreBoard.y - 50, "SCORE", { font: "16px Arial", color: "#ffffff" });
         scoreLabel.setOrigin(0.5, 0);
         
        
-        const currentScoreText = thisPhaser.add.text(scoreBoard.getCenter().x, scoreBoard.y  , "0", { font: "25px Arial", fill: "#ffffff" });
+        const currentScoreText = thisPhaser.add.text(scoreBoard.getCenter().x, scoreBoard.y  , "0", { font: "25px Arial", color: "#ffffff" });
         currentScoreText.setOrigin(0.5, 1);
         
      
@@ -165,7 +169,7 @@ export default class Game extends Phaser.Scene
         
            const scoreBox =  thisPhaser.add.rectangle(x, startY, boxWidth, boxHeight, 0xefab35, 1);
            thisPhaser.physics.add.existing(scoreBox, true)
-           const  boxNumber =  thisPhaser.add.text(x, startY, scores[a].toString(), { font: "16px Arial", fill: "#000000" });
+           const  boxNumber =  thisPhaser.add.text(x, startY, scores[a].toString(), { font: "16px Arial", backgroundColor: "#000000" });
             boxNumber.setOrigin(0.5);
             
             
@@ -193,7 +197,7 @@ export default class Game extends Phaser.Scene
           black_ball.setPosition(ballCenterX, ballCenterY);
 
        const restartButton =  thisPhaser.add.circle(150, 50, 40,  0xffffff, 1)
-          const restartButtonText =  thisPhaser.add.text(restartButton.getCenter().x,restartButton.getCenter().y, "RESTART GAME", { font: "10px Arial", fill: "#efab35", fontSize: "bold" });
+          const restartButtonText =  thisPhaser.add.text(restartButton.getCenter().x,restartButton.getCenter().y, "RESTART GAME", { font: "10px Arial", color: "#efab35", fontSize: "bold" });
           restartButtonText.setOrigin(0.5)
           restartButton.setInteractive();
           restartButton.on('pointerdown', () => {

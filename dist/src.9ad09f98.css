@@ -4,6 +4,8 @@ canvas {
     left: 40%;
     bottom: 50%;
     transform: translate(-25%, 0%);
+    width: 95%;
+    height: 95%;
 }
 
 body {
@@ -32,6 +34,9 @@ img {
     right: 0;
 }
 
-#game-container {}
+#game-container {
+    width: 95%;
+    height: 95%;
+}
 
 /*# sourceMappingURL=/src.9ad09f98.css.map */
