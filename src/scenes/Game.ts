@@ -1,10 +1,10 @@
 import * as Phaser from 'phaser';
 
 let currentScore = 0;
-let balls:[] = [];
-let scoreBoxes:[] = [];
-let  boxNumbers:[] = [];
- 
+let balls:Phaser.GameObjects.Arc[] = [];
+let scoreBoxes:Phaser.GameObjects.Rectangle[] = [];
+let  boxNumbers:Phaser.GameObjects.Text[] = [];
+let   black_ball:Phaser.GameObjects.Arc;
 
 
 
@@ -14,7 +14,7 @@ export default class Game extends Phaser.Scene
    {
 
    }
-    createPlayBall (balls:[], scoreBoxes:[], currentScoreText:string, scores:number[], x:number, n:number) {
+    createPlayBall (balls:Phaser.GameObjects.Arc[], scoreBoxes:Phaser.GameObjects.Text[], currentScoreText:string, scores:number[], x:number, n:number) {
 
         const startButton =  this.add.circle(40, 50, 40, 0xffffff, 1)
         const startButtonText=  this.add.text(startButton.getCenter().x, startButton.getCenter().y, "START", { font: "14px Arial", fill: "#efab35", fontSize: "bold" });
@@ -103,8 +103,7 @@ export default class Game extends Phaser.Scene
 
 
    create(){
-//   let  scoreBoxes = []
-//   let boxNumbers = []
+
       let thisPhaser = this
       function plinko(n:number){
 
@@ -117,7 +116,7 @@ export default class Game extends Phaser.Scene
         currentScoreText.setOrigin(0.5, 1);
         
      
-   let  ball = thisPhaser.add.circle(400, 20, 20, 0x010101, 1);
+    black_ball = thisPhaser.add.circle(400, 20, 20, 0x010101, 1);
 
     let x:number  = 200
     let y: number = 100
@@ -189,9 +188,9 @@ export default class Game extends Phaser.Scene
      
 }
      const lastRowX = x + (n-0.76)*25 + 12.5;
-          const ballCenterY = ball.getCenter().y;
+          const ballCenterY =black_ball.getCenter().y;
           const ballCenterX = lastRowX + 10; 
-          ball.setPosition(ballCenterX, ballCenterY);
+          black_ball.setPosition(ballCenterX, ballCenterY);
 
        const restartButton =  thisPhaser.add.circle(150, 50, 40,  0xffffff, 1)
           const restartButtonText =  thisPhaser.add.text(restartButton.getCenter().x,restartButton.getCenter().y, "RESTART GAME", { font: "10px Arial", fill: "#efab35", fontSize: "bold" });
@@ -206,17 +205,19 @@ export default class Game extends Phaser.Scene
            let n: number = 8
         plinko(n)
 
-    const nOptions: HTMLElement= document.getElementById("gridLines")!;
+    const nOptions: HTMLElement | any= document.getElementById("gridLines")!;
     nOptions.addEventListener("change", function(){
         
         balls.map(ball => {
-            ball.destroy();
+             ball.destroy();
+          
 
         })
         scoreBoxes.map(scoreBoxe =>{
             scoreBoxe.destroy();
         })
-        ball.destroy();
+     
+          black_ball.destroy()
        
         boxNumbers.map(boxNumber =>{
             boxNumber.destroy()
